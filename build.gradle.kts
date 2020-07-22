@@ -51,7 +51,7 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
     runtimeOnly("com.h2database:h2")
-    implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     testImplementation(platform("io.micronaut:micronaut-bom:$$micronautVersion"))
     testImplementation("io.micronaut.test:micronaut-test-kotlintest")
     testImplementation("io.mockk:mockk:1.9.3")
