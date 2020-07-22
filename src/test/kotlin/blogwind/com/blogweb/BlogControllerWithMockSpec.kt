@@ -1,13 +1,13 @@
 package blogwind.com.blogweb
 
 import com.blogwind.easywebmock.MockServerManager
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.StringSpec
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.annotation.MockBean
-import io.micronaut.test.extensions.kotlintest.MicronautKotlinTestExtension.getMock
+import io.micronaut.test.extensions.kotest.MicronautKotestExtension.getMock
 import io.micronaut.test.support.TestPropertyProvider
 import io.mockk.every
 import io.mockk.mockk

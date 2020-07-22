@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.*
 val developmentOnly: Configuration by configurations.creating
 val micronautVersion: String by project
 val micronautDataVersion: String by project
+val micronautTestVersion: String by project
 val kotlinVersion: String by project
 
 plugins {
@@ -52,10 +53,10 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
     runtimeOnly("com.h2database:h2")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    testImplementation(platform("io.micronaut:micronaut-bom:$$micronautVersion"))
-    testImplementation("io.micronaut.test:micronaut-test-kotlintest")
+    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation("io.micronaut.test:micronaut-test-kotest:$micronautTestVersion")
     testImplementation("io.mockk:mockk:1.9.3")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:4.0.3")
     testImplementation("com.github.Wuvist:easywebmock:master-SNAPSHOT")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
 }
