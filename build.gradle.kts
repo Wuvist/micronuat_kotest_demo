@@ -15,6 +15,16 @@ plugins {
     kotlin("plugin.allopen") version kotlinVersion
     id("com.github.johnrengelman.shadow") version "5.2.0"
     id("com.palantir.docker") version "0.25.0"
+    id("nebula.rpm") version "8.4.1"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("com.netflix.nebula:gradle-ospackage-plugin:8.4.1")
+    }
 }
 
 repositories {
@@ -74,6 +84,18 @@ allOpen {
 tasks {
     named<ShadowJar>("shadowJar") {
         mergeServiceFiles()
+    }
+
+    register("fooRpm", com.netflix.gradle.plugins.rpm.Rpm::class) {
+        release = "1"
+
+        from(project.tasks["shadowJar"].outputs.files) {
+            into("lib")
+        }
+
+        from("src/main/resources") {
+            into("conf")
+        }
     }
 
     withType<Test>{
