@@ -9,7 +9,7 @@ object Integration : Tag()
 object IntegrationExtension : TagExtension {
 
     override fun tags(): Tags {
-        if (!System.getenv("run").isNullOrEmpty()) {
+        if (!System.getProperty("run").isNullOrEmpty()) {
             return Tags.include(Integration)
         }
 

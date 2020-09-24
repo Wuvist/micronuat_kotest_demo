@@ -124,3 +124,7 @@ tasks {
         }
     }
 }
+val test by tasks.getting(Test::class) {
+    // ... Other configurations ...
+    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
+}
