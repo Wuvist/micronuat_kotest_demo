@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.tasks.*
 
 val developmentOnly: Configuration by configurations.creating
 val micronautVersion: String by project
