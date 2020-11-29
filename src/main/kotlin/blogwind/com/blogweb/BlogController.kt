@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.PathVariable
 import io.reactivex.Single
 
 @Controller("/blog")
-class BlogController(private val backendApi: BackendApi, private val usernameService: UsernameServiceImpl) {
+class BlogController(private val backendApi: BackendApi, private val usernameService: UsernameService) {
     @Get("/{id}")
     fun get(@PathVariable id: Int): Single<String> {
         val result = backendApi.blog(id)
