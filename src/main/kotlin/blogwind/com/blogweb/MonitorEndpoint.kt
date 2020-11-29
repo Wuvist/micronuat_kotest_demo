@@ -9,29 +9,24 @@ import io.micronaut.management.health.indicator.HealthIndicator
 import io.micronaut.management.health.indicator.HealthResult
 import io.reactivex.Flowable
 import io.reactivex.Single
-import kotlinx.coroutines.rx2.await
+import io.reactivex.functions.BiFunction
 import org.reactivestreams.Publisher
 import java.util.*
 import java.util.stream.Collectors
 import javax.inject.Singleton
-
 
 @Endpoint(id = "monitor", defaultEnabled = true, defaultSensitive = false)
 class MonitorEndpoint(private val healthAggregator: HealthAggregator<HealthResult>,
                       private val apis: Array<HTTPIndicator>,
                       private val healthIndicators: Array<HealthIndicator>) {
     @Read
-    suspend fun getMonitorData(): CSMonitoring {
+    fun getMonitorData(): Single<CSMonitoring> {
         val result = healthAggregator.aggregate(healthIndicators, HealthLevelOfDetail.STATUS_DESCRIPTION_DETAILS)
-        val result2 = prepare(aggregateHTTP(apis))
+        val result2 = Flowable.fromPublisher(aggregateHTTP(apis)).toList()
 
-        return Single.fromPublisher(result).map {
-            CSMonitoring(it.name, it.status, result2, it.details)
-        }.await()
-    }
-
-    private suspend fun prepare(result: Flowable<CheckResult>): List<CheckResult> {
-        return Flowable.fromPublisher(result).toList().await()
+        return Single.fromPublisher(result).zipWith(result2, BiFunction { it, r2 ->
+            CSMonitoring(it.name, it.status, r2, it.details)
+        })
     }
 
     private fun aggregateHTTP(indicators: Array<HTTPIndicator>): Flowable<CheckResult> {
