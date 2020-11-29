@@ -14,12 +14,25 @@ import javax.inject.Singleton
 import javax.persistence.*
 
 @Client("\${blogapi.backend.url}")
-interface BackendApi : UserAPI {
+interface BackendApi : UserAPI, MonitorApi {
     @Get(value = "/blog?id={blogId}")
     fun blog(blogId: Int): Single<Blog>
 
+    @Get(value = "/health")
+    override fun checkHealth(): Single<String>
+
     @Get(value = "/home")
     fun home(@RequestAttribute("X-User") blog: Blog): Single<String>
+}
+
+@Client("\${blogapi.backend.url}")
+interface BackendApi2 : UserAPI, MonitorApi {
+    @Get(value = "/LICENSE")
+    override fun checkHealth(): Single<String>
+}
+
+interface MonitorApi {
+    fun checkHealth(): Single<String>
 }
 
 @UserAuth
