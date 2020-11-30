@@ -7,7 +7,7 @@ val micronautTestVersion: String by project
 val kotlinVersion: String by project
 
 plugins {
-    val kotlinVersion = "1.3.50"
+    val kotlinVersion = "1.4.20"
     application
     kotlin("jvm") version kotlinVersion
     kotlin("kapt") version kotlinVersion

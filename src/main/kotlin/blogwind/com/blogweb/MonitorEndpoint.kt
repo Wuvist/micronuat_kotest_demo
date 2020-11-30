@@ -20,12 +20,12 @@ class MonitorEndpoint(private val healthAggregator: HealthAggregator<HealthResul
                       private val apis: Array<HTTPIndicator>,
                       private val healthIndicators: Array<HealthIndicator>) {
     @Read
-    fun getMonitorData(): Single<CSMonitoring> {
+    fun getMonitorData(): Single<MonitoringResult> {
         val result = healthAggregator.aggregate(healthIndicators, HealthLevelOfDetail.STATUS_DESCRIPTION_DETAILS)
         val result2 = Flowable.fromPublisher(aggregateHTTP(apis)).toList()
 
-        return Single.fromPublisher(result).zipWith(result2, BiFunction { it, r2 ->
-            CSMonitoring(it.name, it.status, r2, it.details)
+        return Single.fromPublisher(result).zipWith(result2, { it, apiResult ->
+            MonitoringResult(it.name, it.status, apiResult, it.details)
         })
     }
 
@@ -58,7 +58,7 @@ data class CheckResult(
         val status: Boolean
 )
 
-data class CSMonitoring(
+data class MonitoringResult(
         val name: String,
         val status: HealthStatus,
         val data: Any,
