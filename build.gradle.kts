@@ -50,6 +50,8 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
+    implementation("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("jakarta.persistence:jakarta.persistence-api:2.2.2")
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion")
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
